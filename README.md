@@ -1,4 +1,4 @@
-# Streamdots: Streaming LLaMA responses with live dot indicators — simple, quirky, and real‑time.
+# Streamdots: Streaming LLaMA responses with live dot indicator
 
 ---
 
