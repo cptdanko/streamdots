@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SSE Generate Demo</title>
+  <style>
+    body { font-family: monospace; background: #f9f9f9; padding: 20px; }
+    #output { white-space: pre-wrap; border: 1px solid #ccc; padding: 10px; margin-top: 20px; }
+    #dots { color: green; font-weight: bold; }
+  </style>
+  <script>
+    function startGeneration() {
+      const prompt = document.getElementById("prompt").value;
+      const outputDiv = document.getElementById("output");
+      const dotsDiv = document.getElementById("dots");
+
+      outputDiv.textContent = "";
+      dotsDiv.textContent = "";
+
+      // Open SSE connection
+      const evtSource = new EventSource(`http://localhost:3000/generate/stream?prompt=${encodeURIComponent(prompt)}`);
+
+      evtSource.onmessage = (event) => {
+        const data = event.data;
+        console.log(`received a message from eventSource -> ${event.data}`);
+        // If it's just a dot, append to dots div
+
+        if (data.trim() === ".") {
+          // dotsDiv.textContent += ".";
+        } else if (data === "[DONE]") {
+            outputDiv.textContent += "\n\n **************************DONE**************************";
+            evtSource.close();
+        } else {
+          // Otherwise, append to output
+          const formatted = data.replace(/\*\*/g, "\n\n");
+          outputDiv.textContent += formatted;
+        }
+      };
+
+      evtSource.onerror = () => {
+        outputDiv.textContent += "\n[Error: SSE connection closed]";
+        evtSource.close();
+      };
+    }
+  </script>
+</head>
+<body>
+  <h1>LLM Generate Demo</h1>
+  <input id="prompt" type="text" placeholder="Enter your prompt" size="50" />
+  <button onclick="startGeneration()">Generate</button>
+
+  <div id="dots"></div>
+  <div id="output"></div>
+</body>
+</html>
