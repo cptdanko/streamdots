@@ -7,6 +7,8 @@
 `streamdots` is a **Node.js + Express API built with TypeScript** that integrates with [Ollama](https://ollama.ai) to run LLaMA models.  
 It demonstrates how to expose a `/generate/stream` endpoint that streams progress indicators (dots) to the client while the LLM processes a prompt, and then returns the generated output.  
 
+p.s. this repo was built to have the inspiration to write [post 1 on My Day To-Do blog](https://mydaytodo.com/local-llm-api-ollama-llama3-nodejs-typescript/) and [post 2 on Medium.](https://medium.com/@bhuman.soni/building-real-time-ai-apps-with-ollama-llama-3-node-js-typescript-express-8629749a6bb9)
+
 This repo is ideal if you want to learn:
 - How to scaffold an Express + TypeScript project
 - How to integrate LLaMA via Ollama
